@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Files</title>
+</head>
+<body>
+
+    <!-- For loop logic of jinja template -->
+    {%for file in files%}
+    <p>
+        <a href="{{url_for('download', image = file.name)}}">{{file.name}}</a> </p>
+    {%endfor%}
+
+</body>
+</html>
