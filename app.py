@@ -3,12 +3,14 @@ from flask_wtf import FlaskForm
 from wtforms import FileField, SubmitField
 from werkzeug.utils import secure_filename
 from wtforms.validators import InputRequired
+from pathlib import Path
 import os
 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'supersecretkey'
 app.config['UPLOAD_FOLDER'] = 'static'
+
 
 class UploadFileForm(FlaskForm):
     file = FileField("File", validators=[InputRequired()])
@@ -18,8 +20,11 @@ class UploadFileForm(FlaskForm):
 @app.route('/home', methods=['GET',"POST"])
 def home():
     form = UploadFileForm()
+    print("here")
     if form.validate_on_submit():
+        print("here1")
         file = form.file.data
+        print(type(file))
         file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),app.config['UPLOAD_FOLDER'],secure_filename(file.filename)))
         return "File has been uploaded."
     return render_template('index.html', form=form)
@@ -39,6 +44,17 @@ def file_download_two():
 @app.route('/file3/')
 def file_download_three():
     return send_file("Unit03.png", as_attachment=True)
+
+@app.route('/files/')
+def file_downloads():
+    p = Path('static')
+    fileList = [x for x in p.iterdir() if x.is_file()]
+    return render_template('files.html', files=fileList)
+
+@app.route('/download/<image>')
+def download(image):
+    p = Path(f'static/{image}')
+    return send_file(p.absolute(), as_attachment=True)
 
 if __name__ == '__main__':
     app.run(debug=True)
