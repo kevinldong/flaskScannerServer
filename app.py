@@ -6,6 +6,8 @@ from wtforms.validators import InputRequired
 from pathlib import Path
 import os
 
+from ids.ids import *
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'supersecretkey'
@@ -20,13 +22,13 @@ class UploadFileForm(FlaskForm):
 @app.route('/home', methods=['GET',"POST"])
 def home():
     form = UploadFileForm()
-    print("here")
     if form.validate_on_submit():
-        print("here1")
         file = form.file.data
-        print(type(file))
-        file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),app.config['UPLOAD_FOLDER'],secure_filename(file.filename)))
-        return "File has been uploaded."
+        if virustotal_file_scan(file):
+            file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),app.config['UPLOAD_FOLDER'],secure_filename(file.filename)))
+            return "File has been uploaded."
+        else:
+            return "Failed to uplaod the file"
     return render_template('index.html', form=form)
 
 @app.route('/file0/')
@@ -57,4 +59,4 @@ def download(image):
     return send_file(p.absolute(), as_attachment=True)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True,reload=True)
