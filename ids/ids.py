@@ -11,4 +11,5 @@ def virustotal_file_scan(file: str) -> bool:
     Returns:
         a bool indicating whether the file is safe to save
     """
+    raise NotImplementedError
     return False

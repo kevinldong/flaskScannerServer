@@ -1,4 +1,4 @@
-from flask import Flask, render_template, send_file
+from flask import Flask, render_template, send_file, redirect
 from flask_wtf import FlaskForm
 from wtforms import FileField, SubmitField
 from werkzeug.utils import secure_filename
@@ -28,7 +28,7 @@ def home():
             file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),app.config['UPLOAD_FOLDER'],secure_filename(file.filename)))
             return "File has been uploaded."
         else:
-            return "Failed to uplaod the file"
+            return redirect('https://http.cat/400')
     return render_template('index.html', form=form)
 
 @app.route('/file0/')
