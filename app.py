@@ -59,4 +59,4 @@ def download(image):
     return send_file(p.absolute(), as_attachment=True)
 
 if __name__ == '__main__':
-    app.run(debug=True,reload=True)
+    app.run(debug=True)
