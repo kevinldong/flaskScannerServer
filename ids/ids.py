@@ -1,15 +1,18 @@
-"""
-Module to provide IDS functionality for our Flask webserver
+import requests
 
-"""
+def virustotal_file_scan(file: str):
+    url = "https://www.virustotal.com/api/v3/files"
 
-def virustotal_file_scan(file: str) -> bool:
-    """Function to scan a file with the VT API
+    files = {"file": open(file, "rb")}
+    headers = {
+        "Accept": "application/json",
+        "x-apikey": '62f38e8e1c83d0c31ddaf4e93cc260c9e0aaaba9c72b949e4492d3e3a71c4a79',
+        "Content-Type": "multipart/form-data"
+    }
 
-    Args:
-        file: a str containing the contents of the file to save
-    Returns:
-        a bool indicating whether the file is safe to save
-    """
-    raise NotImplementedError
-    return False
+    response = requests.post(url, headers=headers)
+
+    if response.text == 200:
+        return True
+    elif response.text == 400:
+        return False
