@@ -6,7 +6,7 @@ def virustotal_file_scan(file: str):
     files = {"file": open(file, "rb")}
     headers = {
         "Accept": "application/json",
-        "x-apikey": '62f38e8e1c83d0c31ddaf4e93cc260c9e0aaaba9c72b949e4492d3e3a71c4a79',
+        "x-apikey": 'api key',
         "Content-Type": "multipart/form-data"
     }
 
