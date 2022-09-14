@@ -20,7 +20,14 @@ def virustotal_file_scan(file: str):
     completion = analysis.status
 
     # TODO: use above to make decision of whether to save
-    if analysis == 200:
-        return True
-    else:
-        return False
+    while completion == 'completed':
+        if undetected_count == 0:
+            return False
+        elif harmless_count == 0:
+            return False
+        elif suspicious_count > 0:
+            return False
+        elif malicious_count > 0:
+            return False
+        else:
+            return True
