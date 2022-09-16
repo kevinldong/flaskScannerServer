@@ -5,7 +5,6 @@ from werkzeug.utils import secure_filename
 from wtforms.validators import InputRequired
 from pathlib import Path
 import os
-
 from ids.ids import *
 
 
@@ -25,7 +24,7 @@ def home():
     if form.validate_on_submit():
         file = form.file.data
         if virustotal_file_scan(file):
-            file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),app.config['UPLOAD_FOLDER'],secure_filename(file.filename)))
+            file.read(os.path.join(os.path.abspath(os.path.dirname(__file__)),app.config['UPLOAD_FOLDER'],secure_filename(file.filename)))
             return "File has been uploaded."
         else:
             return redirect('https://http.cat/400')
