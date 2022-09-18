@@ -3,7 +3,7 @@ from io import BytesIO
 
 
 def virustotal_file_scan(file: str):
-    client = vt.Client("gfeskmio")
+    client = vt.Client("API KEY")
 
     analysis = client.scan_file(BytesIO(file), wait_for_completion=True)
 
