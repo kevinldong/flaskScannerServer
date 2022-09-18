@@ -23,8 +23,9 @@ def home():
     form = UploadFileForm()
     if form.validate_on_submit():
         file = form.file.data
-        if virustotal_file_scan(file):
-            file.read(os.path.join(os.path.abspath(os.path.dirname(__file__)),app.config['UPLOAD_FOLDER'],secure_filename(file.filename)))
+        if virustotal_file_scan(file.read()):
+            file.seek(0)
+            file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),app.config['UPLOAD_FOLDER'],secure_filename(file.filename)))
             return "File has been uploaded."
         else:
             return redirect('https://http.cat/400')

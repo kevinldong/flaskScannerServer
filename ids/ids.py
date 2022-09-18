@@ -1,11 +1,14 @@
 import vt
-from io import BufferedReader
+from io import BytesIO
 
 
 def virustotal_file_scan(file: str):
     client = vt.Client("API KEY")
-    scan_file = BufferedReader(file)
-    analysis = client.scan_file(scan_file, wait_for_completion=True)
+def virustotal_file_scan(file: str):
+    client = vt.Client("gfeskmio")
+
+    # Scan file
+    analysis = client.scan_file(BytesIO(file), wait_for_completion=True)
 
     suspicious_count = analysis.stats['suspicious']
     malicious_count = analysis.stats['malicious']
