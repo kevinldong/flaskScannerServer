@@ -21,16 +21,7 @@ class UploadFileForm(FlaskForm):
 @app.route('/home', methods=['GET',"POST"])
 def home():
     form = UploadFileForm()
-    print("validating form")
-    print(dir(form))
-    print(f"{form.errors=}")
-    print(f"{form.form_errors=}")
-    print(f"{form.data=}")
-    print(f"{form.file=}")
-    print(f"{form.hidden_tag=}")
-    print(f"{form.submit=}")
     if form.validate_on_submit():
-        print("valid form")
         file = form.file.data
         if virustotal_file_scan(file.read()):
             file.seek(0)
